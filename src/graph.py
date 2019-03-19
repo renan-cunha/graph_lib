@@ -3,8 +3,8 @@ class Graph:
     def __init__(self, number_of_vertices: int):
         """A class to make basic operations with non-directed graphs"""
         self.verify_vertice_number(number_of_vertices)
-        self.__vertices = list(range(number_of_vertices))
-        self.__edges = []
+        self.__vertices: list = list(range(number_of_vertices))
+        self.__edges: list = []
 
     def number_of_vertices(self) -> int:
         """Return number of vertices"""
@@ -24,11 +24,11 @@ class Graph:
         vertice"""
         self.verify_vertice_exists([vertice])
 
-        connected_vertices = []
+        connected_vertices: list = []
         for edge in self.__edges:
             if vertice in edge:
-                vertice_index = edge.index(vertice)
-                other_vertice_index = abs(vertice_index-1)
+                vertice_index: int = edge.index(vertice)
+                other_vertice_index: int = abs(vertice_index-1)
                 connected_vertices.append(edge[other_vertice_index])
 
         # getting just unique values
