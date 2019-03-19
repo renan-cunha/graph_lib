@@ -1,10 +1,13 @@
+from typing import List
+
+
 class Graph:
 
     def __init__(self, number_of_vertices: int):
         """A class to make basic operations with non-directed graphs"""
         self.verify_vertice_number(number_of_vertices)
-        self.__vertices: list = list(range(number_of_vertices))
-        self.__edges: list = []
+        self.__vertices: List[int] = list(range(number_of_vertices))
+        self.__edges: List = []
 
     def number_of_vertices(self) -> int:
         """Return number of vertices"""
@@ -17,9 +20,9 @@ class Graph:
     def add_edge(self, v: int, w: int) -> None:
         """Adds an edge between vertice v and vertice w"""
         self.verify_vertice_exists([v, w])
-        self.__edges.append([v, w])
+        self.__edges.append((v, w))
 
-    def neighbourhood(self, vertice: int) -> list:
+    def neighbourhood(self, vertice: int) -> List:
         """Returns a list with the vertices that have an edge with the input
         vertice"""
         self.verify_vertice_exists([vertice])
@@ -28,7 +31,7 @@ class Graph:
         for edge in self.__edges:
             if vertice in edge:
                 vertice_index: int = edge.index(vertice)
-                other_vertice_index: int = abs(vertice_index-1)
+                other_vertice_index: int = abs(vertice_index - 1)
                 connected_vertices.append(edge[other_vertice_index])
 
         # getting just unique values
