@@ -3,6 +3,7 @@ from typing import List, Tuple
 
 class Graph:
     """A class to make basic operations with non-directed graphs"""
+    
     def __init__(self, number_of_vertices: int):
         """Initializes a graph with number of vertices >= 0
         It has a list of vertices and a list of edges"""
