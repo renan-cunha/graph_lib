@@ -1,34 +1,35 @@
-from typing import List
+from typing import List, Tuple
 
 
 class Graph:
-
+    """A class to make basic operations with non-directed graphs"""
     def __init__(self, number_of_vertices: int):
-        """A class to make basic operations with non-directed graphs"""
-        self.verify_vertice_number(number_of_vertices)
-        self.__vertices: List[int] = list(range(number_of_vertices))
-        self.__edges: List = []
+        """Initializes a graph with number of vertices >= 0
+        It has a list of vertices and a list of edges"""
+        self.__verify_vertice_number(number_of_vertices)
+        self.vertices: List[int] = list(range(number_of_vertices))
+        self.edges: List[Tuple[int, int]] = []
 
     def number_of_vertices(self) -> int:
         """Return number of vertices"""
-        return len(self.__vertices)
+        return len(self.vertices)
 
     def number_of_edges(self) -> int:
         """Return number of edges"""
-        return len(self.__edges)
+        return len(self.edges)
 
     def add_edge(self, v: int, w: int) -> None:
         """Adds an edge between vertice v and vertice w"""
-        self.verify_vertice_exists([v, w])
-        self.__edges.append((v, w))
+        self.__verify_vertice_exists([v, w])
+        self.edges.append((v, w))
 
     def neighbourhood(self, vertice: int) -> List:
         """Returns a list with the vertices that have an edge with the input
         vertice"""
-        self.verify_vertice_exists([vertice])
+        self.__verify_vertice_exists([vertice])
 
         connected_vertices: list = []
-        for edge in self.__edges:
+        for edge in self.edges:
             if vertice in edge:
                 vertice_index: int = edge.index(vertice)
                 other_vertice_index: int = abs(vertice_index - 1)
@@ -39,16 +40,16 @@ class Graph:
 
     def __str__(self) -> str:
         return "Vertices: {0}\n" \
-               "Edges: {1}".format(self.__vertices, self.__edges)
+               "Edges: {1}".format(self.vertices, self.edges)
 
     @staticmethod
-    def verify_vertice_number(number: int) -> None:
+    def __verify_vertice_number(number: int) -> None:
         """Raise an exception if vertice number is negative"""
         if type(number) != int or number < 0:
             raise ValueError("Vertice number should be a positive integer")
 
-    def verify_vertice_exists(self, vertices: list) -> None:
+    def __verify_vertice_exists(self, vertices: list) -> None:
         """Raise an exception if vertice is not encountered"""
         for vertice in vertices:
-            if vertice not in self.__vertices:
+            if vertice not in self.vertices:
                 raise ValueError("Vertice does not existe on this graph")
