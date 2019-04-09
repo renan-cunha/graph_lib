@@ -104,7 +104,8 @@ class Graph:
         """Raise an exception if vertice is not encountered"""
         for vertice in vertices:
             if vertice not in self.graph:
-                raise ValueError("Vertice does not exist on this graph")
+                raise ValueError(f"Vertice {vertice} does not exist on this"
+                                 f" graph")
 
     @staticmethod
     def __assert_positive_vertice(number: int) -> None:
