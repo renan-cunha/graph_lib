@@ -24,17 +24,16 @@ class Graph:
         for i in range(number_of_vertices):
             self.graph[i] = []
 
+        self.__number_of_vertices = number_of_vertices
+        self.__number_of_edges = 0
+
     def number_of_vertices(self) -> int:
         """Returns number of vertices"""
-        return len(self.graph)
+        return self.__number_of_vertices
 
     def number_of_edges(self) -> int:
         """Returns number of edges"""
-        count = 0
-        for vertice in self.graph:
-            for connected_vertice in self.neighbourhood(vertice):
-                count += 1 if connected_vertice == vertice else 0.5
-        return int(count)
+        return self.__number_of_edges
 
     def add_edge(self, v: int, w: int) -> None:
         """Adds an edge between vertices v and w"""
@@ -44,6 +43,8 @@ class Graph:
         # only adds two edges if not a loop
         if v != w:
             self.graph[w].append(v)
+
+        self.__number_of_edges += 1
 
     def neighbourhood(self, v: int) -> List:
         """Returns a list with the vertices that have an edge with the vertice
@@ -82,6 +83,7 @@ class Graph:
         for connected_vertice in self.neighbourhood(vertice):
             if connected_vertice == vertice:
                 count += 1
+
         return count
 
     def number_of_loops_graph(self) -> int:
