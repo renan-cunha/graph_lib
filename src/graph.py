@@ -1,56 +1,113 @@
-from typing import List, Tuple
+from typing import List, Dict, Tuple
 
 
 class Graph:
     """A class to make basic operations with non-directed graphs"""
     
     def __init__(self, number_of_vertices: int):
-        """Initializes a graph with number of vertices >= 0
-        It has a list of vertices and a list of edges"""
-        self.__verify_vertice_number(number_of_vertices)
-        self.vertices: List[int] = list(range(number_of_vertices))
-        self.edges: List[Tuple[int, int]] = []
+        """
+        Initializes a graph with number of vertices >= 0
+
+        The graph is represented with dictionaries
+        The keys are in int and represent the vertices
+        The values are lists with ints representing the connected vertices.
+
+        An example is:
+            {1: [2,3], 2: [1], 3: [1], 4: [4]}
+
+        The vertice 1 has a connection with the vertices 2 and 3.
+        The vertice 4 has a loop
+        """
+        self.__assert_positive_vertice(number_of_vertices)
+        self.graph: Dict[int: List[int]] = {}
+
+        for i in range(number_of_vertices):
+            self.graph[i] = []
 
     def number_of_vertices(self) -> int:
-        """Return number of vertices"""
-        return len(self.vertices)
+        """Returns number of vertices"""
+        return len(self.graph)
 
     def number_of_edges(self) -> int:
-        """Return number of edges"""
-        return len(self.edges)
+        """Returns number of edges"""
+        count = 0
+        for vertice in self.graph:
+            for connected_vertice in self.neighbourhood(vertice):
+                count += 1 if connected_vertice == vertice else 0.5
+        return int(count)
 
     def add_edge(self, v: int, w: int) -> None:
-        """Adds an edge between vertice v and vertice w"""
-        self.__verify_vertice_exists([v, w])
-        self.edges.append((v, w))
+        """Adds an edge between vertices v and w"""
+        self.__verify_vertices_exists([v, w])
+        self.graph[v].append(w)
 
-    def neighbourhood(self, vertice: int) -> List:
-        """Returns a list with the vertices that have an edge with the input
-        vertice"""
-        self.__verify_vertice_exists([vertice])
+        # only adds two edges if not a loop
+        if v != w:
+            self.graph[w].append(v)
 
-        connected_vertices: list = []
-        for edge in self.edges:
-            if vertice in edge:
-                vertice_index: int = edge.index(vertice)
-                other_vertice_index: int = abs(vertice_index - 1)
-                connected_vertices.append(edge[other_vertice_index])
+    def neighbourhood(self, v: int) -> List:
+        """Returns a list with the vertices that have an edge with the vertice
+        v"""
+        self.__verify_vertices_exists([v])
+        return self.graph[v]
 
-        # getting just unique values
-        return list(set(connected_vertices))
+    def degree(self, v: int) -> int:
+        """Returns the number of edges that a vertice has.
+        Remember: Loops count as two edges"""
+        self.__verify_vertices_exists([v])
+        count = 0
+        for connected_vertice in self.neighbourhood(v):
+            count += 2 if connected_vertice == v else 1
+        return count
+
+    def max_degree(self) -> Tuple[int, int]:
+        """Returns a tuple with the vertice with maximum degree and it's
+        degree"""
+
+        max_vertice, max_degree = 0, 0
+
+        for vertice in self.graph:
+            vertice_degree = self.degree(vertice)
+
+            if vertice_degree > max_degree:
+                max_vertice, max_degree = vertice, vertice_degree
+
+        return max_vertice, max_degree
+
+    def number_of_loops_vertice(self, vertice: int) -> int:
+        """Returns the number of loops on a vertice"""
+        self.__verify_vertices_exists([vertice])
+
+        count = 0
+        for connected_vertice in self.neighbourhood(vertice):
+            if connected_vertice == vertice:
+                count += 1
+        return count
+
+    def number_of_loops_graph(self) -> int:
+        """Returns the number of loops on the graph"""
+
+        count = 0
+        for vertice in self.graph:
+            count += self.number_of_loops_vertice(vertice)
+        return count
 
     def __str__(self) -> str:
-        return "Vertices: {0}\n" \
-               "Edges: {1}".format(self.vertices, self.edges)
+        result = "\nVertices: Connected Vertices\n"
+        for vertice in self.graph:
+            result += f"{vertice}: {self.graph[vertice]}\n"
+        return result
+
+    def __verify_vertices_exists(self, vertices: list) -> None:
+        """Raise an exception if vertice is not encountered"""
+        for vertice in vertices:
+            if vertice not in self.graph:
+                raise ValueError("Vertice does not exist on this graph")
 
     @staticmethod
-    def __verify_vertice_number(number: int) -> None:
+    def __assert_positive_vertice(number: int) -> None:
         """Raise an exception if vertice number is negative"""
         if type(number) != int or number < 0:
             raise ValueError("Vertice number should be a positive integer")
 
-    def __verify_vertice_exists(self, vertices: list) -> None:
-        """Raise an exception if vertice is not encountered"""
-        for vertice in vertices:
-            if vertice not in self.vertices:
-                raise ValueError("Vertice does not existe on this graph")
+
