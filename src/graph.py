@@ -1,4 +1,4 @@
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Set
 
 
 class Graph:
@@ -38,25 +38,17 @@ class Graph:
     def add_edge(self, v: int, w: int) -> None:
         """Adds an edge between vertices v and w"""
         self.__graph[v].append(w)
-
-        # only adds two edges if not a loop
-        if v != w:
-            self.__graph[w].append(v)
-
+        self.__graph[w].append(v)
         self.__number_of_edges += 1
 
-    def neighbourhood(self, v: int) -> List:
+    def neighbourhood(self, v: int) -> Set:
         """Returns a list with the vertices that have an edge with the vertice
         v"""
-        return self.__graph[v]
+        return set(self.__graph[v])
 
     def degree(self, v: int) -> int:
-        """Returns the degree of a vertice, sum of all edges.
-        Remember: Loops count as two edges"""
-        count = 0
-        for connected_vertice in self.neighbourhood(v):
-            count += 2 if connected_vertice == v else 1
-        return count
+        """Returns the sum of all edges"""
+        return len(self.neighbourhood(v))
 
     def max_degree(self) -> Tuple[int, int]:
         """Returns a tuple with the vertice with maximum degree and it's
@@ -69,11 +61,11 @@ class Graph:
         """Returns the number of loops on a vertice"""
 
         count = 0
-        for connected_vertice in self.neighbourhood(vertice):
+        for connected_vertice in self.__graph[vertice]:
             if connected_vertice == vertice:
                 count += 1
 
-        return count
+        return count // 2
 
     def number_of_loops_graph(self) -> int:
         """Returns the number of loops on the graph"""
@@ -85,7 +77,7 @@ class Graph:
         return count
 
     def __str__(self) -> str:
-        result = "\nVertices: Connected Vertices\n"
+        result = "\nVertices: Edges\n"
         for vertice in self.__graph:
             result += f"{vertice}: {self.__graph[vertice]}\n"
         return result
