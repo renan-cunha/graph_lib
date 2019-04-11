@@ -82,3 +82,6 @@ class GraphAdjacencyList(Graph):
         for vertice in self.__graph:
             result += f"{vertice}: {self.__graph[vertice]}\n"
         return result
+
+    def __repr__(self) -> str:
+        return self.__str__()

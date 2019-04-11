@@ -71,9 +71,10 @@ class GraphMatrix(Graph):
         degrees = []
         for vertice in range(num_vertices):
             degrees.append((vertice, self.degree(vertice)))
-        return max(degrees, key=lambda x: x[0])
+        return max(degrees, key=lambda x: x[1])
 
     def number_of_loops_graph(self) -> int:
+        """Returns the number of loops on the graph"""
 
         count = 0
         for index in range(self.number_of_vertices()):
@@ -90,3 +91,6 @@ class GraphMatrix(Graph):
             result += f"{vertice}  {self.__graph[vertice]}\n"
 
         return result
+
+    def __repr__(self) -> str:
+        return self.__str__()
