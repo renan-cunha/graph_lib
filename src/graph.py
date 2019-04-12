@@ -20,6 +20,10 @@ class Graph(ABC):
             if v >= self.number_of_vertices():
                 raise ValueError(f"Vertice {v} does not exist on this graph")
 
+    def get_vertices(self) -> List[int]:
+        """Returns a list with vertices"""
+        return list(range(self.number_of_vertices()))
+
     @abstractmethod
     def number_of_edges(self) -> int:
         """Returns number of edges in int"""
@@ -51,6 +55,33 @@ class Graph(ABC):
     def number_of_loops_graph(self) -> int:
         """Returns an int with the number of loops on the graph"""
         pass
+
+    def is_connected(self) -> bool:
+        """Returns a boolean variable saying if the graph is conex"""
+        vertice_index = 0
+        marked_vertices = [0]
+
+        while vertice_index < len(marked_vertices):
+            vertice = marked_vertices[vertice_index]
+            connected_vertices = self.neighbourhood(vertice)
+            for v in connected_vertices:
+                if v not in marked_vertices:
+                    marked_vertices.append(v)
+
+            if self.get_vertices() == sorted(marked_vertices):
+                return True
+            else:
+                vertice_index += 1
+        return False
+
+    def is_euler_graph(self) -> bool:
+        """Returns a boolean variable saying if it's an euler graph"""
+        if not self.is_connected():
+            return False
+        for vertice in range(self.number_of_vertices()):
+            if self.degree(vertice) % 2 == 1 or self.degree(vertice) == 0:
+                return False
+        return True
 
     @abstractmethod
     def __str__(self) -> str:

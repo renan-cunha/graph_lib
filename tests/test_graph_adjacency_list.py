@@ -181,6 +181,38 @@ def test_num_loops_graph(edges, expected):
     assert graph.number_of_loops_graph() == expected
 
 
+@pytest.mark.parametrize("edges,size,expected", [
+    ([[0, 0]], 1, True),
+    ([], 1, True),
+    ([[0, 0], [1, 1]], 2, False),
+    ([[0, 1]], 2, True),
+    ([[0, 1], [1, 2]], 3, True),
+    ([[0, 1], [2, 2]], 3, False),
+])
+def test_dfs(edges, size, expected):
+    graph = GraphAdjacencyList(size)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    print(graph)
+    assert graph.is_connected() == expected
+
+
+@pytest.mark.parametrize("edges,size,expected", [
+    ([[0, 0]], 1, True),
+    ([], 1, True),
+    ([[0, 0], [1, 1]], 2, False),
+    ([[0, 1]], 2, True),
+    ([[0, 1], [1, 2]], 3, True),
+    ([[0, 1], [2, 2]], 3, False),
+])
+def test_dfs(edges, size, expected):
+    graph = GraphAdjacencyList(size)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    print(graph)
+    assert graph.is_connected() == expected
+
+
 
 
 
