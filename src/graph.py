@@ -76,10 +76,10 @@ class Graph(ABC):
 
     def is_euler_graph(self) -> bool:
         """Returns a boolean variable saying if it's an euler graph"""
-        if not self.is_connected():
+        if not self.is_connected() or self.number_of_vertices() < 2:
             return False
-        for vertice in range(self.number_of_vertices()):
-            if self.degree(vertice) % 2 == 1 or self.degree(vertice) == 0:
+        for vertice in self.get_vertices():
+            if self.degree(vertice) % 2 == 1:
                 return False
         return True
 

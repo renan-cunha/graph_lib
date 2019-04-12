@@ -191,6 +191,20 @@ def test_dfs(edges, size, expected):
     assert graph.is_connected() == expected
 
 
+@pytest.mark.parametrize("edges,size,expected", [
+    ([], 1, False),
+    ([[0, 0]], 1, False),
+    ([[0, 1]], 2, False),
+    ([[0, 1], [1, 2], [2, 0]], 3, True),
+    ([[0, 1], [1, 2], [2, 0], [0, 0]], 3, True),
+])
+def test_euler_graph(edges, size, expected):
+    graph = GraphMatrix(size)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    print(graph)
+    assert graph.is_euler_graph() == expected
+
 
 
 
