@@ -215,6 +215,24 @@ def test_euler_graph(edges, size, expected):
     assert graph.is_euler_graph() == expected
 
 
+@pytest.mark.parametrize("edges,size,expected", [
+    ([], 1, False),
+    ([[0, 0]], 1, False),
+    ([[0, 1]], 2, True),
+    ([[0, 1], [0, 1]], 2, False),
+    ([[0, 1], [0, 1], [0, 1]], 2, True),
+    ([[0, 1], [0, 1], [1, 1], [0, 0]], 2, False),
+    ([[0, 1], [1, 2], [2, 0]], 3, False),
+    ([[0, 1], [1, 2], [2, 0], [0, 0]], 3, False),
+    ([[0, 1], [1, 2], [2, 0], [0, 1]], 3, True),
+])
+def test_euler_graph(edges, size, expected):
+    graph = GraphAdjacencyList(size)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    print(graph)
+    assert graph.has_open_euler_path() == expected
+
 
 
 

@@ -83,6 +83,19 @@ class Graph(ABC):
                 return False
         return True
 
+    def has_open_euler_path(self) -> bool:
+        """Returns a boolean variable saying it the graph has an open euler
+        path"""
+        if not self.is_connected() or self.number_of_vertices() < 2:
+            return False
+        count = 0
+        for vertice in self.get_vertices():
+            count += self.degree(vertice) % 2
+        if count == 2:
+            return True
+        else:
+            return False
+
     @abstractmethod
     def __str__(self) -> str:
         """Returns the string representation of the graph"""
