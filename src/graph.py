@@ -56,28 +56,8 @@ class Graph(ABC):
         """Returns an int with the number of loops on the graph"""
         pass
 
-    def is_connected(self) -> bool:
-        """Returns a boolean variable saying if the graph is conex"""
-        vertice_index = 0
-        marked_vertices = [0]
-
-        while vertice_index < len(marked_vertices):
-            vertice = marked_vertices[vertice_index]
-            connected_vertices = self.neighbourhood(vertice)
-            for v in connected_vertices:
-                if v not in marked_vertices:
-                    marked_vertices.append(v)
-
-            if self.get_vertices() == sorted(marked_vertices):
-                return True
-            else:
-                vertice_index += 1
-        return False
-
     def is_euler_graph(self) -> bool:
         """Returns a boolean variable saying if it's an euler graph"""
-        if not self.is_connected() or self.number_of_vertices() < 2:
-            return False
         for vertice in self.get_vertices():
             if self.degree(vertice) % 2 == 1:
                 return False
@@ -86,8 +66,6 @@ class Graph(ABC):
     def has_open_euler_path(self) -> bool:
         """Returns a boolean variable saying it the graph has an open euler
         path"""
-        if not self.is_connected() or self.number_of_vertices() < 2:
-            return False
         count = 0
         for vertice in self.get_vertices():
             count += self.degree(vertice) % 2
