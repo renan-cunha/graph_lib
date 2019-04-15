@@ -56,8 +56,48 @@ class Graph(ABC):
         """Returns an int with the number of loops on the graph"""
         pass
 
+    def vertices_with_edges(self) -> List[int]:
+        """Returns a list with the vertices with degree > 0"""
+        result = []
+        vertices = self.get_vertices()
+        for vertice in vertices:
+            if self.degree(vertice) > 0:
+                result.append(vertice)
+        return result
+
+    def has_path(self, begin:int , end:int) -> bool:
+        """Returns a boolean variable saying if a path between the two
+        vertices, begin and ends exist"""
+        self._assert_vertices_exists([begin, end])
+
+        connected_vertices = self.neighbourhood(begin)
+        for vertice in connected_vertices:
+            if vertice == end:
+                return True
+            new_connected_vertices = self.neighbourhood(vertice)
+            for new_vertice in new_connected_vertices:
+                if new_vertice not in connected_vertices:
+                    connected_vertices.append(new_vertice)
+        return False
+        
+    def has_acessible_edges(self) -> bool:
+        """Returns a boolean variable saying if all the edges are 
+        accessible from any vertice"""
+        vertices_with_positive_degree = self.vertices_with_edges()
+        
+        if len(vertices_with_positive_degree) == 0:
+            return True
+
+        begin = vertices_with_positive_degree.pop()
+        for vertice in vertices_with_positive_degree:
+            if not self.has_path(begin, vertice):
+                return False
+        return True
+
     def is_euler_graph(self) -> bool:
         """Returns a boolean variable saying if it's an euler graph"""
+        if not self.has_acessible_edges():
+            return False
         for vertice in self.get_vertices():
             if self.degree(vertice) % 2 == 1:
                 return False
@@ -66,6 +106,8 @@ class Graph(ABC):
     def has_open_euler_path(self) -> bool:
         """Returns a boolean variable saying it the graph has an open euler
         path"""
+        if not self.has_acessible_edges():
+            return False
         count = 0
         for vertice in self.get_vertices():
             count += self.degree(vertice) % 2

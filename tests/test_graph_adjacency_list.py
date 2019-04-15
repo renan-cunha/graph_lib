@@ -187,6 +187,7 @@ def test_num_loops_graph(edges, expected):
     ([], 2, True),
     ([[0, 1]], 2, False),
     ([[0, 0]], 2, True),
+    ([[0, 0], [1,1]], 2, False),
     ([[0, 0], [0, 1], [0, 1]], 2, True),
     ([[0, 1], [0, 1]], 2, True),
     ([], 3, True),
@@ -209,6 +210,7 @@ def test_euler_graph(edges, size, expected):
     ([[0, 0]], 1, False),
     ([], 2, False),
     ([[0, 1]], 2, True),
+    ([[0, 1], [2,2]], 3, False),
     ([[0, 0]], 2, False),
     ([[0, 0], [0, 1], [0, 1]], 2, False),
     ([[0, 1], [0, 1]], 2, False),
@@ -227,5 +229,71 @@ def test_euler_path(edges, size, expected):
     assert graph.has_open_euler_path() == expected
 
 
+@pytest.mark.parametrize("edges,size,expected", [
+    ([], 1, []),
+    ([[0, 0]], 1, [0]),
+    ([[0, 0], [0, 0]], 1, [0]),
+    ([], 2, []),
+    ([[0,0]], 2, [0]),
+    ([[1,1]], 2, [1]),
+    ([[0,0], [1,1]], 2, [0,1]),
+    ([[0,0], [0,1], [1,1]], 2, [0,1]),
+    ([], 3, []),
+    ([[0,0]], 3, [0]),
+    ([[1,1]], 3, [1]),
+    ([[2,2]], 3, [2]),
+    ([[1,2]], 3, [1,2]),
+    ([[0,0], [2,2]], 3, [0,2]),
+    ([[0,0], [0,1]], 3, [0,1]),
+    ([[0,0], [1,2]], 3, [0,1,2]),
 
+])
+def test_vertices_with_edges(edges, size, expected):
+    graph = GraphAdjacencyList(size)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    assert graph.vertices_with_edges() == expected
+
+
+@pytest.mark.parametrize("edges,size,begin,end,expected", [
+    ([[0,1], [1,2], [2,3], [3,4], [0,5]], 6, 0, 5, True),
+    ([], 1, 0, 0, False),
+    ([[0,0]], 1, 0, 0, True),
+    ([[0,0], [0,0]], 1, 0, 0, True),
+    ([[0,0], [0,0]], 2, 0, 1, False),
+    ([[0,0], [0,1]], 2, 0, 1, True),
+    ([[0,0], [0,1], [1,2]], 3, 0, 2, True),
+    ([[0,0], [0,1], [1,2]], 3, 1, 2, True),
+    ([[0,0], [0,1], [1,2]], 3, 2, 1, True),
+    ([[0,0], [0,1], [1,2]], 3, 2, 0, True),
+])
+def test_path(edges, size, begin, end, expected):
+    graph = GraphAdjacencyList(size)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    print(graph)
+    print(begin)
+    print(end)
+    assert graph.has_path(begin,end) == expected
+
+@pytest.mark.parametrize("edges,size,expected", [
+    ([], 1, True),
+    ([[0, 0]], 1, True),
+    ([[0, 0], [0, 0]], 1, True),
+    ([], 2, True),
+    ([[0,0]], 2, True),
+    ([[1,1]], 2, True),
+    ([[0,0], [1,1]], 2, False),
+    ([[0,0], [0,1], [1,1]], 2, True),
+    ([[0,0]], 3, True),
+    ([[0,0], [2,2]], 3, False),
+    ([[0,0], [0,1]], 3, True),
+    ([[0,0], [1,2]], 3, False),
+
+])
+def test_edges_acessible(edges, size, expected):
+    graph = GraphAdjacencyList(size)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    assert graph.has_acessible_edges() == expected
 
