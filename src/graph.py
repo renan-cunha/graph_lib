@@ -123,14 +123,14 @@ class Graph(ABC):
             visited_vertices = set()
         visited_vertices.add(start_vertice)
         connected_vertices = self.neighbourhood(start_vertice)
+        print(start_vertice)
         for vertice in connected_vertices:
 
             if vertice not in visited_vertices:
-                print(start_vertice)
                 visited_vertices.add(vertice)
                 visited_vertices.union(self.dfs(start_vertice=vertice,
                                                 visited_vertices=visited_vertices))
-                print(vertice)
+                print(start_vertice)
         return visited_vertices
 
     @abstractmethod
