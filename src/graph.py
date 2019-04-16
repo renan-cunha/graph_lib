@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Set
 from abc import ABC, abstractmethod
 
 
@@ -115,6 +115,23 @@ class Graph(ABC):
             return True
         else:
             return False
+
+    def dfs(self, start_vertice=0,
+            visited_vertices=None) -> Set:
+        """Returns the edges of the depth-first search algorithm"""
+        if not visited_vertices:
+            visited_vertices = set()
+        visited_vertices.add(start_vertice)
+        connected_vertices = self.neighbourhood(start_vertice)
+        for vertice in connected_vertices:
+
+            if vertice not in visited_vertices:
+                print(start_vertice)
+                visited_vertices.add(vertice)
+                visited_vertices.union(self.dfs(start_vertice=vertice,
+                                                visited_vertices=visited_vertices))
+                print(vertice)
+        return visited_vertices
 
     @abstractmethod
     def __str__(self) -> str:
