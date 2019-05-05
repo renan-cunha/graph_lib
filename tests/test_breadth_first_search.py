@@ -1,6 +1,6 @@
 import pytest
-from src.breadth_first_search import BreadthFirstSearch
-from src.search_color import Color
+from src.search.breadth_first_search import BreadthFirstSearch
+from src.search.color import Color
 from src.graph_adjacency_list import GraphAdjacencyList
 from src.graph_matrix import GraphMatrix
 

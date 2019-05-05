@@ -1,6 +1,6 @@
 from src.graph import Graph
 from typing import List
-from src.search_color import Color
+from src.search.color import Color
 from queue import Queue
 
 
