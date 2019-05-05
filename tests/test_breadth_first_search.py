@@ -160,3 +160,77 @@ def test_distance_bfs_matrix(num_vertices, edges_list, start_vertice,
     bfs = BreadthFirstSearch(graph, start_vertice)
     distance_bfs = bfs.dist_from_source
     assert distance_bfs == distance_list
+
+
+@pytest.mark.parametrize("num_vertices,edges_list,start_vertice,parent_list",[
+    (1, [], 0, [None]),
+    (1, [[0, 0]], 0, [None]),
+    (1, [[0, 0], [0, 0]], 0, [None]),
+
+    (2, [], 0, [None, None]),
+    (2, [], 1, [None, None]),
+    (2, [[0, 0], [1, 1]], 1, [None, None]),
+    (2, [[0, 0], [1, 1]], 0, [None, None]),
+    (2, [[0, 0], [0, 1], [1, 1]], 1, [1, None]),
+    (2, [[0, 0], [0, 1], [1, 1]], 0, [None, 0]),
+    (2, [[0, 1]], 1, [1, None]),
+    (2, [[0, 1]], 0, [None, 0]),
+
+    (3, [], 0, [None, None, None]),
+    (3, [], 1, [None, None, None]),
+    (3, [], 2, [None, None, None]),
+    (3, [[0, 1]], 2, [None, None, None]),
+    (3, [[0, 1]], 0, [None, 0, None]),
+    (3, [[0, 1]], 1, [1, None, None]),
+    (3, [[0, 1], [1, 2]], 1, [1, None, 1]),
+    (3, [[0, 1], [1, 2]], 0, [None, 0, 1]),
+    (3, [[0, 1], [1, 2]], 2, [1, 2, None]),
+    (3, [[1, 2]], 1, [None, None, 1]),
+    (3, [[1, 2]], 2, [None, 2, None]),
+])
+def test_parent_bfs_adjacency_list(num_vertices, edges_list, start_vertice,
+                                     parent_list):
+    graph = GraphAdjacencyList(num_vertices)
+    length_list = len(edges_list)
+    if length_list > 0:
+        for x, y in edges_list:
+            graph.add_edge(x, y)
+    bfs = BreadthFirstSearch(graph, start_vertice)
+    parent_bfs = bfs.parent_vertice
+    assert parent_bfs == parent_list
+
+@pytest.mark.parametrize("num_vertices,edges_list,start_vertice,parent_list",[
+    (1, [], 0, [None]),
+    (1, [[0, 0]], 0, [None]),
+
+    (2, [], 0, [None, None]),
+    (2, [], 1, [None, None]),
+    (2, [[0, 0], [1, 1]], 1, [None, None]),
+    (2, [[0, 0], [1, 1]], 0, [None, None]),
+    (2, [[0, 0], [0, 1], [1, 1]], 1, [1, None]),
+    (2, [[0, 0], [0, 1], [1, 1]], 0, [None, 0]),
+    (2, [[0, 1]], 1, [1, None]),
+    (2, [[0, 1]], 0, [None, 0]),
+
+    (3, [], 0, [None, None, None]),
+    (3, [], 1, [None, None, None]),
+    (3, [], 2, [None, None, None]),
+    (3, [[0, 1]], 2, [None, None, None]),
+    (3, [[0, 1]], 0, [None, 0, None]),
+    (3, [[0, 1]], 1, [1, None, None]),
+    (3, [[0, 1], [1, 2]], 1, [1, None, 1]),
+    (3, [[0, 1], [1, 2]], 0, [None, 0, 1]),
+    (3, [[0, 1], [1, 2]], 2, [1, 2, None]),
+    (3, [[1, 2]], 1, [None, None, 1]),
+    (3, [[1, 2]], 2, [None, 2, None]),
+])
+def test_parent_bfs_matrix(num_vertices, edges_list, start_vertice,
+                                   parent_list):
+    graph = GraphMatrix(num_vertices)
+    length_list = len(edges_list)
+    if length_list > 0:
+        for x, y in edges_list:
+            graph.add_edge(x, y)
+    bfs = BreadthFirstSearch(graph, start_vertice)
+    parent_bfs = bfs.parent_vertice
+    assert parent_bfs == parent_list

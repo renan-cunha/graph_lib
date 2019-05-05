@@ -10,6 +10,7 @@ class BreadthFirstSearch:
         number_of_vertices = graph.number_of_vertices()
         self.color: List[Color] = [Color.WHITE]*number_of_vertices
         self.dist_from_source: List = [None] * number_of_vertices
+        self.parent_vertice: List = [None]*number_of_vertices
         self.__run(graph, start_vertice)
 
     def __run(self, graph: Graph, vertice: int) -> None:
@@ -22,6 +23,8 @@ class BreadthFirstSearch:
             for adjacent_vertice in graph.neighbourhood(new_vertice):
                 if self.color[adjacent_vertice] == Color.WHITE:
                     self.color[adjacent_vertice] = Color.GRAY
+
+                    self.parent_vertice[adjacent_vertice] = new_vertice
 
                     parent_distance: int = self.dist_from_source[new_vertice]
                     temp_distance: int = parent_distance + 1
