@@ -10,16 +10,16 @@ class DepthFirstSearch:
         self.final_vertice_time: List = [None]*graph.number_of_vertices()
         self.predecessor: List = [None]*graph.number_of_vertices()
         self.count: int = 0
-        self.dfs(graph, start_vertice)
+        self.run(graph, start_vertice)
 
-    def dfs(self, graph: Graph, vertice: int) -> None:
+    def run(self, graph: Graph, vertice: int) -> None:
         self.marked_vertices[vertice] = True
         self.count += 1
         self.discovered_vertice_time[vertice] = self.count
         for connected_vertice in graph.neighbourhood(vertice):
             if not self.marked_vertices[connected_vertice]:
                 self.predecessor[connected_vertice] = vertice
-                self.dfs(graph, connected_vertice)
+                self.run(graph, connected_vertice)
         self.count += 1
         self.final_vertice_time[vertice] = self.count
 
