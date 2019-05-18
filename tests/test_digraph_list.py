@@ -141,6 +141,20 @@ def test_out_degree(edges, vertice, expected):
     assert graph.out_degree(vertice) == expected
 
 
+@pytest.mark.parametrize("edges,vertice,expected", [
+    ([[0, 0]], 0, 1),
+    ([[0, 0], [0, 1]], 0, 1),
+    ([[0, 0], [0, 1]], 1, 1),
+    ([[0, 0], [0, 1], [0, 2]], 0, 1),
+    ([[0, 0], [0, 1], [2, 1]], 1, 2),
+    ([[0, 0], [0, 1]], 2, 0),
+])
+def test_in_degree(edges, vertice, expected):
+    graph = DigraphList(3)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    assert graph.in_degree(vertice) == expected
+
 @pytest.mark.parametrize("edges,expected", [
     ([[0, 0]], (0, 2)),
     ([[0, 0], [0, 1]], (0, 3)),

@@ -54,7 +54,12 @@ class DigraphList(AbstractDigraph):
 
     def in_degree(self, v: int) -> int:
         self._assert_vertices_exists([v])
-        return len(self.__graph[v])
+        result = 0
+        for vertice in self.get_vertices():
+            for adj_vertice in self.__graph[vertice]:
+                if adj_vertice == v:
+                    result += 1
+        return result
 
 
     def max_in_degree(self) -> Tuple[int, int]:
