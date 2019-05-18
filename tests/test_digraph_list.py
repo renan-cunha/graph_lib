@@ -129,16 +129,16 @@ def test_in_neighbourhood(edges, vertice, expected):
 
 
 @pytest.mark.parametrize("edges,vertice,expected", [
-    ([[0, 0]], 0, 2),
-    ([[0, 0], [0, 1]], 0, 3),
-    ([[0, 0], [0, 1]], 1, 1),
-    ([[0, 0], [0, 1], [0, 2]], 0, 4),
+    ([[0, 0]], 0, 1),
+    ([[0, 0], [0, 1]], 0, 2),
+    ([[0, 0], [0, 1]], 1, 0),
+    ([[0, 0], [0, 1], [0, 2]], 0, 3),
 ])
-def test_degree(edges, vertice, expected):
+def test_out_degree(edges, vertice, expected):
     graph = DigraphList(3)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
-    assert graph.degree(vertice) == expected
+    assert graph.out_degree(vertice) == expected
 
 
 @pytest.mark.parametrize("edges,expected", [

@@ -48,14 +48,14 @@ class DigraphList(AbstractDigraph):
                 result.add(vertice)
         return result
 
-    def in_degree(self, v: int) -> int:
-        """Returns the sum of all edges of a vertice"""
+    def out_degree(self, v: int) -> int:
         self._assert_vertices_exists([v])
         return len(self.__graph[v])
 
-    def out_degree(self, v: int) -> int:
-        """Returns the sum of all edges of a vertice"""
-        pass
+    def in_degree(self, v: int) -> int:
+        self._assert_vertices_exists([v])
+        return len(self.__graph[v])
+
 
     def max_in_degree(self) -> Tuple[int, int]:
         """Returns a tuple with the vertice with maximum degree and it's
