@@ -54,16 +54,21 @@ class AbstractDigraph(ABC):
         """Returns the sum of edges that go to v"""
         pass
 
+    @staticmethod
+    def _assert_mode_out_in(mode: str) -> None:
+        if mode != "in" and mode != "out":
+            raise ValueError(f"the mode {mode} is not acceptable, use"
+                             f"'in' or 'out")
+
     def __max_degre(self, mode: str) -> Tuple[int, int]:
+        AbstractDigraph._assert_mode_out_in(mode)
         degrees = []
+        current_degrees: int = 0
         for vertice in self.get_vertices():
             if mode == "in":
                 current_degrees = self.in_degree(vertice)
             elif mode == "out":
                 current_degrees = self.out_degree(vertice)
-            else:
-                raise Exception(f"the mode {mode} is not acceptable, use"
-                                f"'in' or 'out")
             degrees.append(current_degrees)
         maximum_degree = max(degrees)
         return degrees.index(maximum_degree), maximum_degree
@@ -77,6 +82,10 @@ class AbstractDigraph(ABC):
         """Returns a tuple with the vertice with maximum degree and it's
         degree"""
         return self.__max_degre("in")
+
+    @abstractmethod
+    def number_of_loops_vertice(self, v:int) -> int:
+        pass
 
     def number_of_loops_graph(self) -> int:
         count = 0

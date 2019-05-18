@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Set
 from src.graph.abstract_digraph import AbstractDigraph
 
 
@@ -39,8 +39,8 @@ class DigraphMatrix(AbstractDigraph):
     def __raise_exception_if_edge_exists(self, v: int, w: int) -> None:
         if self.__verify_edge_exists(v, w):
             raise ValueError(f"The edge from vertice {v} to vertice {w}"
-                            f"exists already, to use parallel edges, switch"
-                            f"to the DigraphList class")
+                             f"exists already, to use parallel edges, switch"
+                             f"to the DigraphList class")
 
     def add_edge(self, v: int, w: int) -> None:
         self._assert_vertices_exists([v, w])
@@ -53,71 +53,44 @@ class DigraphMatrix(AbstractDigraph):
             count += sum(self.__graph[row])
         return count
 
-
-    def in_neighbourhood(self, v: int) -> List:
-        """Returns a list with the vertices that have an edge with the vertice
-        v"""
+    def __neighbourhood(self, v: int, mode: str) -> Set[int]:
         self._assert_vertices_exists([v])
+        AbstractDigraph._assert_mode_out_in(mode)
 
         result = set()
         for w in range(self.number_of_vertices()):
-            if self.__graph[v][w] == 1:
+
+            first_index = -1
+            last_index = -1
+            if mode == "out":
+                first_index, last_index = v, w
+            elif mode == "in":
+                first_index, last_index = w, v
+
+            if self.__graph[first_index][last_index] == 1:
                 result.add(w)
-        return list(result)
 
-    def out_neighbourhood(self, v: int) -> List:
-        """Returns a list with the vertices that have an edge with the vertice
-        v"""
-        self._assert_vertices_exists([v])
+        return result
 
-        result = set()
-        for w in range(self.number_of_vertices()):
-            if self.__graph[v][w] == 1:
-                result.add(w)
-        return list(result)
+    def out_neighbourhood(self, v: int) -> Set[int]:
+        return self.__neighbourhood(v, "out")
 
+    def in_neighbourhood(self, v: int) -> Set[int]:
+        return self.__neighbourhood(v, "in")
 
     def out_degree(self, vertice: int) -> int:
-        """Returns the sum of all edges"""
         self._assert_vertices_exists([vertice])
-        result = sum(self.__graph[vertice])
-        if self.__graph[vertice][vertice] == 1:
-            result += 1
-        return result
+        return sum(self.__graph[vertice])
 
     def in_degree(self, vertice: int) -> int:
-        """Returns the sum of all edges"""
         self._assert_vertices_exists([vertice])
-        result = sum(self.__graph[vertice])
-        if self.__graph[vertice][vertice] == 1:
-            result += 1
+        result = 0
+        for v in self.get_vertices():
+            result += self.__graph[v][vertice]
         return result
 
-    def max_out_degree(self) -> Tuple[int, int]:
-        """Returns a tuple with the vertice with maximum degree and it's
-        degree"""
-        num_vertices = self.number_of_vertices()
-        degrees = []
-        for vertice in range(num_vertices):
-            degrees.append((vertice, self.degree(vertice)))
-        return max(degrees, key=lambda x: x[1])
-
-    def max_in_degree(self) -> Tuple[int, int]:
-        """Returns a tuple with the vertice with maximum degree and it's
-        degree"""
-        num_vertices = self.number_of_vertices()
-        degrees = []
-        for vertice in range(num_vertices):
-            degrees.append((vertice, self.degree(vertice)))
-        return max(degrees, key=lambda x: x[1])
-
-    def number_of_loops_graph(self) -> int:
-        """Returns the number of loops on the graph"""
-
-        count = 0
-        for index in range(self.number_of_vertices()):
-            count += self.__graph[index][index]
-        return count
+    def number_of_loops_vertice(self, v:int) -> int:
+        return self.__graph[v][v]
 
     def __str__(self) -> str:
         result = "\nV   "

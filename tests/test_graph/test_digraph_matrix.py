@@ -121,7 +121,7 @@ def test_max_in_degree(edges, expected):
     ([[0, 0], [0, 1]], 0, 1),
     ([[0, 0], [0, 1]], 1, 0),
     ([[0, 0], [0, 1], [0, 2]], 0, 1),
-    ([[1, 1], [1, 1]], 1, 2),
+    ([[0, 1], [0, 2]], 0, 0),
 ])
 def test_num_loops_vertice(edges, vertice, expected):
     graph = DigraphMatrix(3)
@@ -135,7 +135,7 @@ def test_num_loops_vertice(edges, vertice, expected):
     ([[0, 0], [0, 1]], 1),
     ([[0, 0], [0, 1], [0, 2]], 1),
     ([[1, 1], [0, 1], [0, 2]], 1),
-    ([[1, 1], [1, 1]], 2),
+    ([[1, 1], [0, 0]], 2),
     ([[1, 2], [0, 1], [0, 2]], 0),
 ])
 def test_num_loops_graph(edges, expected):
