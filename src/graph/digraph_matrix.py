@@ -38,12 +38,13 @@ class DigraphMatrix(AbstractDigraph):
 
     def __raise_exception_if_edge_exists(self, v: int, w: int) -> None:
         if self.__verify_edge_exists(v, w):
-            raise Exception(f"The edge from vertice {v} to vertice {w}"
+            raise ValueError(f"The edge from vertice {v} to vertice {w}"
                             f"exists already, to use parallel edges, switch"
                             f"to the DigraphList class")
 
     def add_edge(self, v: int, w: int) -> None:
         self._assert_vertices_exists([v, w])
+        self.__raise_exception_if_edge_exists(v, w)
         self.__graph[v][w] = 1
 
     def number_of_edges(self) -> int:
