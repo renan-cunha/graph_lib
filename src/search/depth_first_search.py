@@ -1,10 +1,10 @@
-from src.graph import Graph
+from src.graph.abstract_digraph import AbstractDigraph
 from typing import List
 
 
 class DepthFirstSearch:
     """Class that performs the depth-first search algorithm"""
-    def __init__(self, graph: Graph, start_vertice: int):
+    def __init__(self, graph: AbstractDigraph, start_vertice: int):
         self.marked_vertices: List[bool] = [False]*graph.number_of_vertices()
         self.discovered_vertice_time: List = [None]*graph.number_of_vertices()
         self.final_vertice_time: List = [None]*graph.number_of_vertices()
@@ -12,7 +12,7 @@ class DepthFirstSearch:
         self.count: int = 0
         self.run(graph, start_vertice)
 
-    def run(self, graph: Graph, vertice: int) -> None:
+    def run(self, graph: AbstractDigraph, vertice: int) -> None:
         self.marked_vertices[vertice] = True
         self.count += 1
         self.discovered_vertice_time[vertice] = self.count

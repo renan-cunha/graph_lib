@@ -1,6 +1,6 @@
 import pytest
 import random
-from src.digraph_list import DigraphList
+from src.graph.digraph_list import DigraphList
 
 
 def test_assert_positive_vertice_raises_exception():

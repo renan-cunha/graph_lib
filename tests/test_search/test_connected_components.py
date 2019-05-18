@@ -1,8 +1,8 @@
 import pytest
-from src.digraph_list import DigraphList
-from src.digraph_matrix import DigraphMatrix
+from src.graph.digraph_list import DigraphList
+from src.graph.digraph_matrix import DigraphMatrix
 from src.search.connected_components import ConnectedComponents
-from src.abstract_digraph import AbstractDigraph
+from src.graph.abstract_digraph import AbstractDigraph
 
 
 @pytest.mark.parametrize("num_vertices,edges_list,expected", [

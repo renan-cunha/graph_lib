@@ -1,6 +1,6 @@
 import pytest
 import random
-from src.digraph_matrix import DigraphMatrix
+from src.graph.digraph_matrix import DigraphMatrix
 
 
 def test_assert_positive_vertice_raises_exception():

@@ -1,8 +1,8 @@
 import pytest
 from src.search.breadth_first_search import BreadthFirstSearch
 from src.search.color import Color
-from src.digraph_list import DigraphList
-from src.digraph_matrix import DigraphMatrix
+from src.graph.digraph_list import DigraphList
+from src.graph.digraph_matrix import DigraphMatrix
 
 @pytest.mark.parametrize("num_vertices,edges_list,start_vertice,color_list,"
                          "result", [

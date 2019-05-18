@@ -1,11 +1,11 @@
-from src.graph import Graph
+from src.graph.abstract_digraph import AbstractDigraph
 from typing import List
 
 
 class ConnectedComponents:
     """Returns the number of conex components of a graph"""
 
-    def __init__(self, graph: Graph):
+    def __init__(self, graph: AbstractDigraph):
         num_vertices: int = graph.number_of_vertices()
         self.marked: List[bool] = [False]*num_vertices
         self.id: List = [None]*num_vertices
@@ -16,7 +16,7 @@ class ConnectedComponents:
                 self.__dfs(graph, vertice)
                 self.count += 1
 
-    def __dfs(self, graph: Graph, start_vertice: int) -> None:
+    def __dfs(self, graph: AbstractDigraph, start_vertice: int) -> None:
         print(start_vertice)
         self.marked[start_vertice] = True
         self.id[start_vertice] = self.count
