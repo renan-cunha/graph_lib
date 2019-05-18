@@ -1,8 +1,8 @@
 import pytest
 from src.search.breadth_first_search import BreadthFirstSearch
 from src.search.color import Color
-from src.graph_adjacency_list import GraphAdjacencyList
-from src.graph_matrix import GraphMatrix
+from src.digraph_list import DigraphList
+from src.digraph_matrix import DigraphMatrix
 
 @pytest.mark.parametrize("num_vertices,edges_list,start_vertice,color_list,"
                          "result", [
@@ -36,7 +36,7 @@ from src.graph_matrix import GraphMatrix
 ])
 def test_color_bfs_adjacency_list(num_vertices, edges_list, start_vertice,
                                   color_list, result):
-    graph = GraphAdjacencyList(num_vertices)
+    graph = DigraphList(num_vertices)
     length_list = len(edges_list)
     if length_list > 0:
         for x, y in edges_list:
@@ -75,7 +75,7 @@ def test_color_bfs_adjacency_list(num_vertices, edges_list, start_vertice,
                          ])
 def test_color_bfs_matrix(num_vertices, edges_list, start_vertice,
                                   color_list, result):
-    graph = GraphMatrix(num_vertices)
+    graph = DigraphMatrix(num_vertices)
     length_list = len(edges_list)
     if length_list > 0:
         for x, y in edges_list:
@@ -114,7 +114,7 @@ def test_color_bfs_matrix(num_vertices, edges_list, start_vertice,
                          ])
 def test_distance_bfs_adjacency_list(num_vertices, edges_list, start_vertice,
                                   distance_list):
-    graph = GraphAdjacencyList(num_vertices)
+    graph = DigraphList(num_vertices)
     length_list = len(edges_list)
     if length_list > 0:
         for x, y in edges_list:
@@ -152,7 +152,7 @@ def test_distance_bfs_adjacency_list(num_vertices, edges_list, start_vertice,
 ])
 def test_distance_bfs_matrix(num_vertices, edges_list, start_vertice,
                                   distance_list):
-    graph = GraphMatrix(num_vertices)
+    graph = DigraphMatrix(num_vertices)
     length_list = len(edges_list)
     if length_list > 0:
         for x, y in edges_list:
@@ -190,7 +190,7 @@ def test_distance_bfs_matrix(num_vertices, edges_list, start_vertice,
 ])
 def test_parent_bfs_adjacency_list(num_vertices, edges_list, start_vertice,
                                      parent_list):
-    graph = GraphAdjacencyList(num_vertices)
+    graph = DigraphList(num_vertices)
     length_list = len(edges_list)
     if length_list > 0:
         for x, y in edges_list:
@@ -226,7 +226,7 @@ def test_parent_bfs_adjacency_list(num_vertices, edges_list, start_vertice,
 ])
 def test_parent_bfs_matrix(num_vertices, edges_list, start_vertice,
                                    parent_list):
-    graph = GraphMatrix(num_vertices)
+    graph = DigraphMatrix(num_vertices)
     length_list = len(edges_list)
     if length_list > 0:
         for x, y in edges_list:

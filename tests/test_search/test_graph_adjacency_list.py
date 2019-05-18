@@ -1,30 +1,30 @@
 import pytest
 import random
-from src.graph_adjacency_list import GraphAdjacencyList
+from src.digraph_list import DigraphList
 
 
 def test_assert_positive_vertice_raises_exception():
     with pytest.raises(ValueError) as e:
-        graph = GraphAdjacencyList(-1)
+        graph = DigraphList(-1)
 
 
 def test_asser_positive_vertice_zero():
     try:
-        graph = GraphAdjacencyList(0)
+        graph = DigraphList(0)
     except ValueError:
         assert False
 
 
 def test_assert_positive_vertice_one():
     try:
-        graph = GraphAdjacencyList(1)
+        graph = DigraphList(1)
     except ValueError:
         assert False
 
 
 def test_assert_vertice_exists_in_range():
     try:
-        graph = GraphAdjacencyList(3)
+        graph = DigraphList(3)
         graph.neighbourhood(0)
         assert True
     except ValueError:
@@ -33,7 +33,7 @@ def test_assert_vertice_exists_in_range():
 
 def test_assert_vertice_exists_less_range():
     try:
-        graph = GraphAdjacencyList(3)
+        graph = DigraphList(3)
         graph.neighbourhood(-1)
         assert False
     except ValueError:
@@ -42,7 +42,7 @@ def test_assert_vertice_exists_less_range():
 
 def test_assert_vertice_exists_bigger_range():
     try:
-        graph = GraphAdjacencyList(3)
+        graph = DigraphList(3)
         graph.neighbourhood(3)
         assert False
     except ValueError:
@@ -51,7 +51,7 @@ def test_assert_vertice_exists_bigger_range():
 
 def test_assert_vertice_exists_two_in_range():
     try:
-        graph = GraphAdjacencyList(3)
+        graph = DigraphList(3)
         graph.add_edge(0,2)
         assert True
     except ValueError:
@@ -60,7 +60,7 @@ def test_assert_vertice_exists_two_in_range():
 
 def test_assert_vertice_exists_first_in_range():
     try:
-        graph = GraphAdjacencyList(3)
+        graph = DigraphList(3)
         graph.add_edge(0,3)
         assert False
     except ValueError:
@@ -69,7 +69,7 @@ def test_assert_vertice_exists_first_in_range():
 
 def test_assert_vertice_exists_last_in_range():
     try:
-        graph = GraphAdjacencyList(3)
+        graph = DigraphList(3)
         graph.add_edge(-1,2)
         assert False
     except ValueError:
@@ -78,7 +78,7 @@ def test_assert_vertice_exists_last_in_range():
 
 def test_assert_vertice_exists_two_not_in_range():
     try:
-        graph = GraphAdjacencyList(3)
+        graph = DigraphList(3)
         graph.add_edge(-1,3)
         assert False
     except ValueError:
@@ -86,15 +86,15 @@ def test_assert_vertice_exists_two_not_in_range():
 
 
 def test_number_of_vertice_one():
-    assert GraphAdjacencyList(1).number_of_vertices() == 1
+    assert DigraphList(1).number_of_vertices() == 1
 
 
 def test_number_of_vertice_zero():
-    assert GraphAdjacencyList(0).number_of_vertices() == 0
+    assert DigraphList(0).number_of_vertices() == 0
 
 
 def test_number_of_vertice_four():
-    assert GraphAdjacencyList(4).number_of_vertices() == 4
+    assert DigraphList(4).number_of_vertices() == 4
 
 
 @pytest.mark.parametrize("input,expected", [
@@ -105,7 +105,7 @@ def test_number_of_vertice_four():
     (7, 7),
 ])
 def test_number_of_edges(input, expected):
-    graph = GraphAdjacencyList(10)
+    graph = DigraphList(10)
     for i in range(input):
         edge1 = random.randint(0, 9)
         edge2 = random.randint(0, 9)
@@ -120,7 +120,7 @@ def test_number_of_edges(input, expected):
     ([[0, 0], [0, 1], [0, 2]], 0, [0, 1, 2]),
 ])
 def test_neighbourhood(edges, vertice, expected):
-    graph = GraphAdjacencyList(3)
+    graph = DigraphList(3)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.neighbourhood(vertice) == expected
@@ -133,7 +133,7 @@ def test_neighbourhood(edges, vertice, expected):
     ([[0, 0], [0, 1], [0, 2]], 0, 4),
 ])
 def test_degree(edges, vertice, expected):
-    graph = GraphAdjacencyList(3)
+    graph = DigraphList(3)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.degree(vertice) == expected
@@ -146,7 +146,7 @@ def test_degree(edges, vertice, expected):
     ([[1, 1], [0, 1], [0, 2]], (1, 3)),
 ])
 def test_max_degree(edges, expected):
-    graph = GraphAdjacencyList(3)
+    graph = DigraphList(3)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.max_degree() == expected
@@ -160,7 +160,7 @@ def test_max_degree(edges, expected):
     ([[1, 1], [1, 1]], 1, 2),
 ])
 def test_num_loops_vertice(edges, vertice, expected):
-    graph = GraphAdjacencyList(3)
+    graph = DigraphList(3)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.number_of_loops_vertice(vertice) == expected
@@ -175,7 +175,7 @@ def test_num_loops_vertice(edges, vertice, expected):
     ([[1, 2], [0, 1], [0, 2]], 0),
 ])
 def test_num_loops_graph(edges, expected):
-    graph = GraphAdjacencyList(3)
+    graph = DigraphList(3)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.number_of_loops_graph() == expected
@@ -199,7 +199,7 @@ def test_num_loops_graph(edges, expected):
 
 ])
 def test_euler_graph(edges, size, expected):
-    graph = GraphAdjacencyList(size)
+    graph = DigraphList(size)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.is_euler_graph() == expected
@@ -223,7 +223,7 @@ def test_euler_graph(edges, size, expected):
 
 ])
 def test_euler_path(edges, size, expected):
-    graph = GraphAdjacencyList(size)
+    graph = DigraphList(size)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.has_open_euler_path() == expected
@@ -249,7 +249,7 @@ def test_euler_path(edges, size, expected):
 
 ])
 def test_vertices_with_edges(edges, size, expected):
-    graph = GraphAdjacencyList(size)
+    graph = DigraphList(size)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.vertices_with_edges() == expected
@@ -268,7 +268,7 @@ def test_vertices_with_edges(edges, size, expected):
     ([[0,0], [0,1], [1,2]], 3, 2, 0, True),
 ])
 def test_path(edges, size, begin, end, expected):
-    graph = GraphAdjacencyList(size)
+    graph = DigraphList(size)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     print(graph)
@@ -292,7 +292,7 @@ def test_path(edges, size, begin, end, expected):
 
 ])
 def test_edges_acessible(edges, size, expected):
-    graph = GraphAdjacencyList(size)
+    graph = DigraphList(size)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
     assert graph.has_acessible_edges() == expected

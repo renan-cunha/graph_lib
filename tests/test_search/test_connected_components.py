@@ -1,8 +1,8 @@
 import pytest
-from src.graph_adjacency_list import GraphAdjacencyList
-from src.graph_matrix import GraphMatrix
+from src.digraph_list import DigraphList
+from src.digraph_matrix import DigraphMatrix
 from src.search.connected_components import ConnectedComponents
-from src.graph import Graph
+from src.abstract_digraph import AbstractDigraph
 
 
 @pytest.mark.parametrize("num_vertices,edges_list,expected", [
@@ -34,7 +34,7 @@ from src.graph import Graph
 ])
 def test_connected_components_adjacency_list(num_vertices, edges_list,
                                              expected):
-    graph: Graph = GraphAdjacencyList(num_vertices)
+    graph: AbstractDigraph = DigraphList(num_vertices)
     num_edges: int = len(edges_list)
     if num_edges > 0:
         for x, y in edges_list:
@@ -70,7 +70,7 @@ def test_connected_components_adjacency_list(num_vertices, edges_list,
 ])
 def test_connected_components_matrix(num_vertices, edges_list,
                                              expected):
-    graph: Graph = GraphMatrix(num_vertices)
+    graph: AbstractDigraph = DigraphMatrix(num_vertices)
     num_edges: int = len(edges_list)
     if num_edges > 0:
         for x, y in edges_list:
