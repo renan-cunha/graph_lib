@@ -155,17 +155,31 @@ def test_in_degree(edges, vertice, expected):
         graph.add_edge(edge[0], edge[1])
     assert graph.in_degree(vertice) == expected
 
+
 @pytest.mark.parametrize("edges,expected", [
-    ([[0, 0]], (0, 2)),
-    ([[0, 0], [0, 1]], (0, 3)),
-    ([[0, 0], [0, 1], [0, 2]], (0, 4)),
-    ([[1, 1], [0, 1], [0, 2]], (1, 3)),
+    ([[0, 0]], (0, 1)),
+    ([[0, 0], [0, 1]], (0, 2)),
+    ([[0, 0], [0, 1], [0, 2]], (0, 3)),
+    ([[1, 1], [0, 1], [1, 2]], (1, 2)),
 ])
-def test_max_degree(edges, expected):
+def test_max_out_degree(edges, expected):
     graph = DigraphList(3)
     for edge in edges:
         graph.add_edge(edge[0], edge[1])
-    assert graph.max_degree() == expected
+    assert graph.max_out_degree() == expected
+
+
+@pytest.mark.parametrize("edges,expected", [
+    ([[0, 0]], (0, 1)),
+    ([[0, 0], [0, 1], [2, 1]], (1, 2)),
+    ([[0, 0], [1, 0], [2, 0]], (0, 3)),
+    ([], (0, 0)),
+])
+def test_max_in_degree(edges, expected):
+    graph = DigraphList(3)
+    for edge in edges:
+        graph.add_edge(edge[0], edge[1])
+    assert graph.max_in_degree() == expected
 
 
 @pytest.mark.parametrize("edges,vertice,expected", [

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import List, Tuple, Set
+from typing import List, Tuple, Set, Callable
 
 
 class AbstractDigraph(ABC):
@@ -54,17 +54,29 @@ class AbstractDigraph(ABC):
         """Returns the sum of edges that go to v"""
         pass
 
-    @abstractmethod
-    def max_in_degree(self) -> Tuple[int, int]:
-        """Returns a tuple with the vertice with maximum in_degree and it's
-        in_degree"""
-        pass
+    def __max_degre(self, mode: str) -> Tuple[int, int]:
+        degrees = []
+        for vertice in self.get_vertices():
+            if mode == "in":
+                current_degrees = self.in_degree(vertice)
+            elif mode == "out":
+                current_degrees = self.out_degree(vertice)
+            else:
+                raise Exception(f"the mode {mode} is not acceptable, use"
+                                f"'in' or 'out")
+            degrees.append(current_degrees)
+        maximum_degree = max(degrees)
+        return degrees.index(maximum_degree), maximum_degree
 
-    @abstractmethod
     def max_out_degree(self) -> Tuple[int, int]:
-        """Returns a tuple with the vertice with maximum out_degree and it's
-        out_degree"""
-        pass
+        """Returns a tuple with the vertice with maximum degree and it's
+        degree"""
+        return self.__max_degre("out")
+
+    def max_in_degree(self) -> Tuple[int, int]:
+        """Returns a tuple with the vertice with maximum degree and it's
+        degree"""
+        return self.__max_degre("in")
 
     @abstractmethod
     def number_of_loops_graph(self) -> int:

@@ -61,19 +61,6 @@ class DigraphList(AbstractDigraph):
                     result += 1
         return result
 
-
-    def max_in_degree(self) -> Tuple[int, int]:
-        """Returns a tuple with the vertice with maximum degree and it's
-        degree"""
-        degrees = [self.degree(vertice) for vertice in self.__graph]
-        maximum_degree = max(degrees)
-        return degrees.index(maximum_degree), maximum_degree
-
-    def max_out_degree(self) -> Tuple[int, int]:
-        """Returns a tuple with the vertice with maximum degree and it's
-        degree"""
-        pass
-
     def number_of_loops_vertice(self, vertice: int) -> int:
         """Returns the number of loops on a vertice"""
         self._assert_vertices_exists([vertice])
