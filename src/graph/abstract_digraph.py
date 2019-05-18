@@ -79,9 +79,15 @@ class AbstractDigraph(ABC):
         return self.__max_degre("in")
 
     @abstractmethod
-    def number_of_loops_graph(self) -> int:
-        """Returns an int with the number of loops on the graph"""
+    def number_of_loops_vertice(self, vertice: int) -> int:
         pass
+
+    def number_of_loops_graph(self) -> int:
+        count = 0
+        for vertice in self.get_vertices():
+            count += self.number_of_loops_vertice(vertice)
+
+        return count
 
     @abstractmethod
     def __str__(self) -> str:

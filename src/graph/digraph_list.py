@@ -1,5 +1,5 @@
-from src.abstract_digraph import AbstractDigraph
-from typing import Dict, List, Tuple, Set
+from src.graph.abstract_digraph import AbstractDigraph
+from typing import Dict, List, Set
 
 
 class DigraphList(AbstractDigraph):
@@ -62,22 +62,12 @@ class DigraphList(AbstractDigraph):
         return result
 
     def number_of_loops_vertice(self, vertice: int) -> int:
-        """Returns the number of loops on a vertice"""
         self._assert_vertices_exists([vertice])
 
         count = 0
         for connected_vertice in self.__graph[vertice]:
             if connected_vertice == vertice:
                 count += 1
-
-        return count // 2
-
-    def number_of_loops_graph(self) -> int:
-        """Returns the number of loops on the graph"""
-
-        count = 0
-        for vertice in self.__graph:
-            count += self.number_of_loops_vertice(vertice)
 
         return count
 
