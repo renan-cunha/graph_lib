@@ -33,6 +33,9 @@ class DigraphMatrix(AbstractDigraph):
         for i in range(number_of_vertices):
             self.__graph.append(list_zeros.copy())
 
+    def get_matrix(self) -> List[List[int]]:
+        return self.__graph
+
     def __verify_edge_exists(self, v: int, w: int) -> bool:
         return bool(self.__graph[v][w])
 
