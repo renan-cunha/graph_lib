@@ -1,17 +1,17 @@
-###A basic python lib for non-directed graphs
+### A basic python lib for non-directed graphs
 
 
 Pre-requisites: python 3.6.7+
 
-####To-do
+#### To-do
 
 2. Make UML class diagram
 
-####Requirements
+#### Requirements
 
 1. make function below 
     ```python
-    create_graph(num_vertices: int, is_digraph: bool, is_matrix) -> Graph
+    create_graph(num_vertices: int, is_digraph: bool, is_matrix) returns Graph
     ```
 2. GraphClass
     1. add_edge
