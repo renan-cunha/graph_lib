@@ -5,7 +5,7 @@ Pre-requisites: python 3.6.7+
 
 #### To-do
 
-2. Make UML class diagram
+1. Make UML class diagram
 
 #### Requirements
 
