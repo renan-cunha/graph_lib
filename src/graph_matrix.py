@@ -1,5 +1,6 @@
 from typing import List, Tuple
 from src.graph import Graph
+import copy
 
 
 class GraphMatrix(Graph):
@@ -89,6 +90,13 @@ class GraphMatrix(Graph):
             if self.__graph[v][w] == 1:
                 result.add(w)
         return list(result)
+
+    def transpose(self) -> "GraphMatrix":
+        graph = copy.copy(self)
+        matrix = graph.__graph
+        matrix_transposed = list(map(list, zip(*matrix)))
+        graph.__graph = matrix_transposed
+        return graph
 
     @staticmethod
     def __assert_mode_in_out(mode: str) -> None:
@@ -196,3 +204,5 @@ class GraphMatrix(Graph):
 
     def __repr__(self) -> str:
         return self.__str__()
+
+

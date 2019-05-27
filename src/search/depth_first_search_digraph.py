@@ -5,7 +5,7 @@ from src.search.color import Color
 
 class DepthFirstSearch:
     """Class that performs the depth-first search algorithm"""
-    def __init__(self, graph: GraphMatrix):
+    def __init__(self, graph: GraphMatrix, list_of_vertices: List[int] = None):
         if not graph.digraph:
             raise ValueError("this graph is not directed")
         self.color: List[Color] = [Color.WHITE] * graph.number_of_vertices()
@@ -14,7 +14,9 @@ class DepthFirstSearch:
         self.predecessor: List = [None]*graph.number_of_vertices()
         self.count: int = 0
 
-        for vertice in graph.get_vertices():
+        if not list_of_vertices:
+            list_of_vertices = graph.get_vertices()
+        for vertice in list_of_vertices:
             if self.color[vertice] != Color.BLACK:
                 self.run(graph, vertice)
 
