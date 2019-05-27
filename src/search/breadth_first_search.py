@@ -6,12 +6,14 @@ from queue import Queue
 
 class BreadthFirstSearch:
     """Class that performs the depth-first search algorithm"""
-    def __init__(self, graph: Graph, start_vertice: int):
+    def __init__(self, graph: Graph):
         number_of_vertices = graph.number_of_vertices()
         self.color: List[Color] = [Color.WHITE]*number_of_vertices
         self.dist_from_source: List = [None] * number_of_vertices
         self.parent_vertice: List = [None]*number_of_vertices
-        self.__run(graph, start_vertice)
+        for vertice in graph.get_vertices():
+            if self.color[vertice] != Color.BLACK:
+                self.__run(graph, vertice)
 
     def __run(self, graph: Graph, vertice: int) -> None:
         queue: Queue = Queue()
