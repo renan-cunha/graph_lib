@@ -32,6 +32,9 @@ class GraphMatrix(Graph):
         for i in range(number_of_vertices):
             self.__graph.append(list_zeros.copy())
 
+    def get_matrix(self) -> List[List[int]]:
+        return self.__graph.copy()
+
     def __number_of_edges_non_digraph(self) -> int:
         count = 0
         for row in range(self.number_of_vertices()):
