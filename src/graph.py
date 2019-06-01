@@ -30,7 +30,7 @@ class Graph(ABC):
         pass
 
     @abstractmethod
-    def add_edge(self, v: int, w: int) -> None:
+    def add_edge(self, v: int, w: int, weight: float = 1.0) -> None:
         """Adds an edge between vertices v and w"""
         pass
 

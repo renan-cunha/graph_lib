@@ -33,7 +33,7 @@ class GraphAdjacencyList(Graph):
             count += len(self.__graph[vertice])
         return count // 2
 
-    def add_edge(self, v: int, w: int) -> None:
+    def add_edge(self, v: int, w: int, weight: float = 1.0) -> None:
         """Adds an edge between vertices v and w"""
         self._assert_vertices_exists([v, w])
         self.__graph[v].append(w)

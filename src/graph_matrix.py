@@ -33,6 +33,11 @@ class GraphMatrix(Graph):
         for i in range(number_of_vertices):
             self.__graph.append(list_zeros.copy())
 
+        inf: float = float("Inf")
+        self.__weight: List[List[float]] = [[inf]*number_of_vertices]\
+                                            * \
+                                            number_of_vertices
+
     def get_matrix(self) -> List[List[int]]:
         return self.__graph.copy()
 
@@ -56,20 +61,23 @@ class GraphMatrix(Graph):
         else:
             return self.__number_of_edges_non_digraph()
 
-    def __add_edge_non_digraph(self, v: int, w: int) -> None:
+    def __add_edge_non_digraph(self, v: int, w: int, weight: float) -> None:
         self.__graph[v][w] = 1
         self.__graph[w][v] = 1
+        self.__weight[v][w] = weight
+        self.__weight[w][v] = weight
 
-    def __add_edge_digraph(self, v: int, w: int) -> None:
+    def __add_edge_digraph(self, v: int, w: int, weight: float) -> None:
         self.__graph[v][w] = 1
+        self.__weight[v][w] = weight
 
-    def add_edge(self, v: int, w: int) -> None:
+    def add_edge(self, v: int, w: int, weight: float = 1.0) -> None:
         """Adds an edge between vertices v and w"""
         self._assert_vertices_exists([v, w])
         if self.digraph:
-            self.__add_edge_digraph(v, w)
+            self.__add_edge_digraph(v, w,  weight)
         else:
-            self.__add_edge_non_digraph(v, w)
+            self.__add_edge_non_digraph(v, w, weight)
 
     def __assert_digraph(self) -> None:
         if not self.digraph:
