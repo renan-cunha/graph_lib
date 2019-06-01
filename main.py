@@ -5,6 +5,8 @@ import ast
 from src.transitive_closure.transitive_closure import Warshall
 from src.directed_acyclic_graph.topological_sorting.topological_sorting import TopologicalSorting
 from src.strong_connected_components.strong_connected_components import StrongComponents
+from src.minimal_path.dijkstra import Dijkstra
+
 
 @click.command()
 @click.option("--num_vertices", "-nv", help="Number of vertices in the graph",
@@ -44,6 +46,20 @@ def main(num_vertices, edges, do_warshall, topological_sorting,
         print("Strong Components:")
         temp = StrongComponents(graph)
         print(temp)
+
+    if dijkstra >= 0:
+        vertice = dijkstra
+        str_dijkstra(graph, vertice)
+
+
+def str_dijkstra(graph: GraphMatrix, start_vertice: int) -> None:
+    dijkstra = Dijkstra(graph)
+    result = dijkstra.run(start_vertice)
+    print("\nDijkstra:")
+    print("vertice, cost, path")
+    for vertice in result:
+        cost, path = result[vertice]
+        print(f"{vertice}, {cost}, {path}")
 
 
 def add_edges(graph: GraphMatrix, edges_list: List[List[int]]) -> GraphMatrix:
