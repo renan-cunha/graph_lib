@@ -205,13 +205,24 @@ class GraphMatrix(Graph):
         return count
 
     def __str__(self) -> str:
-        result = "\nV   "
+        result = "V   "
         for i in range(self.number_of_vertices()):
             result += f"{i}  "
         result += "\n"
 
         for vertice in range(self.number_of_vertices()):
             result += f"{vertice}  {self.__graph[vertice]}\n"
+
+        return result
+
+    def str_weight(self) -> str:
+        result = "V   "
+        for i in range(self.number_of_vertices()):
+            result += f"{i}  "
+        result += "\n"
+
+        for vertice in range(self.number_of_vertices()):
+            result += f"{vertice}  {self.weight[vertice]}\n"
 
         return result
 

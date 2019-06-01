@@ -2,7 +2,7 @@ import pytest
 
 
 from src.graph_matrix import GraphMatrix
-from src.transitive_closure.transitive_closure import warshall
+from src.transitive_closure.transitive_closure import Warshall
 
 
 @pytest.mark.parametrize("size, edges, expected", [
@@ -25,4 +25,5 @@ def test_eval(size, edges, expected):
     graph = GraphMatrix(size, digraph=True)
     for x, y in edges:
         graph.add_edge(x, y)
-    assert warshall(graph) == expected
+    warshall = Warshall(graph)
+    assert warshall.run() == expected
