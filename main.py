@@ -43,7 +43,7 @@ def main(num_vertices, edges, do_warshall, topological_sorting,
         print(temp.run())
 
     if strong_components:
-        print("Strong Components:")
+        print("\nStrong Components:")
         temp = StrongComponents(graph)
         print(temp)
 
@@ -55,7 +55,7 @@ def main(num_vertices, edges, do_warshall, topological_sorting,
 def str_dijkstra(graph: GraphMatrix, start_vertice: int) -> None:
     dijkstra = Dijkstra(graph)
     result = dijkstra.run(start_vertice)
-    print("\nDijkstra:")
+    print(f"\nDijkstra from {start_vertice}:")
     print("vertice, cost, path")
     for vertice in result:
         cost, path = result[vertice]
