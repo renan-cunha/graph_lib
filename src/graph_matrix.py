@@ -34,9 +34,14 @@ class GraphMatrix(Graph):
             self.__graph.append(list_zeros.copy())
 
         inf: float = float("Inf")
-        self.__weight: List[List[float]] = [[inf]*number_of_vertices]\
-                                            * \
-                                            number_of_vertices
+
+        self.weight: List[List[float]] = []
+
+        line = [inf]*number_of_vertices
+
+        for i in range(number_of_vertices):
+            self.weight.append(line.copy())
+
 
     def get_matrix(self) -> List[List[int]]:
         return self.__graph.copy()
@@ -64,12 +69,12 @@ class GraphMatrix(Graph):
     def __add_edge_non_digraph(self, v: int, w: int, weight: float) -> None:
         self.__graph[v][w] = 1
         self.__graph[w][v] = 1
-        self.__weight[v][w] = weight
-        self.__weight[w][v] = weight
+        self.weight[v][w] = weight
+        self.weight[w][v] = weight
 
     def __add_edge_digraph(self, v: int, w: int, weight: float) -> None:
         self.__graph[v][w] = 1
-        self.__weight[v][w] = weight
+        self.weight[v][w] = weight
 
     def add_edge(self, v: int, w: int, weight: float = 1.0) -> None:
         """Adds an edge between vertices v and w"""
