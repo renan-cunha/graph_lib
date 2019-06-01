@@ -4,7 +4,7 @@ from typing import List
 import ast
 from src.transitive_closure.transitive_closure import Warshall
 from src.directed_acyclic_graph.topological_sorting.topological_sorting import TopologicalSorting
-
+from src.strong_connected_components.strong_connected_components import StrongComponents
 
 @click.command()
 @click.option("--num_vertices", "-nv", help="Number of vertices in the graph",
@@ -39,6 +39,12 @@ def main(num_vertices, edges, do_warshall, topological_sorting,
         print("Topological Sorting:")
         temp = TopologicalSorting(graph)
         print(temp.run())
+
+    if strong_components:
+        print("Strong Components:")
+        temp = StrongComponents(graph)
+        print(temp)
+
 
 def add_edges(graph: GraphMatrix, edges_list: List[List[int]]) -> GraphMatrix:
     if len(edges_list[0]) == 3:
